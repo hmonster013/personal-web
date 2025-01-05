@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-PersonalApiApplication<personal-api>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.de013.PersonalApiApplication",
+            "projectName": "personal-api",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}
