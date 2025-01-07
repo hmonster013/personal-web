@@ -1,3 +1,51 @@
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 16.5
+-- Dumped by pg_dump version 16.5
+
+-- Started on 2025-01-07 15:40:53
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET xmloption = content;
+SET client_min_messages = warning;
+SET row_security = off;
+
+--
+-- TOC entry 4 (class 2615 OID 2200)
+-- Name: public; Type: SCHEMA; Schema: -; Owner: pg_database_owner
+--
+
+CREATE SCHEMA public;
+
+
+ALTER SCHEMA public OWNER TO pg_database_owner;
+
+--
+-- TOC entry 4861 (class 0 OID 0)
+-- Dependencies: 4
+-- Name: SCHEMA public; Type: COMMENT; Schema: -; Owner: pg_database_owner
+--
+
+COMMENT ON SCHEMA public IS 'standard public schema';
+
+
+SET default_tablespace = '';
+
+SET default_table_access_method = heap;
+
+--
+-- TOC entry 215 (class 1259 OID 16572)
+-- Name: experiences; Type: TABLE; Schema: public; Owner: postgres
+--
+
 CREATE TABLE public.experiences (
     id bigint NOT NULL,
     company_img character varying(255),
@@ -5,15 +53,15 @@ CREATE TABLE public.experiences (
     job_title character varying(255),
     description character varying(255),
     working_period character varying(255),
-    start_date date,
-    end_date date
+    start_date timestamp(6) without time zone,
+    end_date timestamp(6) without time zone
 );
 
 
 ALTER TABLE public.experiences OWNER TO postgres;
 
 --
--- TOC entry 223 (class 1259 OID 16424)
+-- TOC entry 216 (class 1259 OID 16577)
 -- Name: experiences_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -28,8 +76,8 @@ CREATE SEQUENCE public.experiences_id_seq
 ALTER SEQUENCE public.experiences_id_seq OWNER TO postgres;
 
 --
--- TOC entry 3440 (class 0 OID 0)
--- Dependencies: 223
+-- TOC entry 4862 (class 0 OID 0)
+-- Dependencies: 216
 -- Name: experiences_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
@@ -37,7 +85,7 @@ ALTER SEQUENCE public.experiences_id_seq OWNED BY public.experiences.id;
 
 
 --
--- TOC entry 226 (class 1259 OID 16434)
+-- TOC entry 217 (class 1259 OID 16578)
 -- Name: links; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -53,7 +101,7 @@ CREATE TABLE public.links (
 ALTER TABLE public.links OWNER TO postgres;
 
 --
--- TOC entry 225 (class 1259 OID 16433)
+-- TOC entry 218 (class 1259 OID 16583)
 -- Name: links_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -68,8 +116,8 @@ CREATE SEQUENCE public.links_id_seq
 ALTER SEQUENCE public.links_id_seq OWNER TO postgres;
 
 --
--- TOC entry 3441 (class 0 OID 0)
--- Dependencies: 225
+-- TOC entry 4863 (class 0 OID 0)
+-- Dependencies: 218
 -- Name: links_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
@@ -77,7 +125,7 @@ ALTER SEQUENCE public.links_id_seq OWNED BY public.links.id;
 
 
 --
--- TOC entry 220 (class 1259 OID 16399)
+-- TOC entry 219 (class 1259 OID 16584)
 -- Name: projects; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -88,15 +136,15 @@ CREATE TABLE public.projects (
     description character varying(255),
     link_github character varying(255),
     link_website character varying(255),
-    start_date date,
-    end_date date
+    start_date timestamp(6) without time zone,
+    end_date timestamp(6) without time zone
 );
 
 
 ALTER TABLE public.projects OWNER TO postgres;
 
 --
--- TOC entry 219 (class 1259 OID 16398)
+-- TOC entry 220 (class 1259 OID 16589)
 -- Name: projects_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -111,8 +159,8 @@ CREATE SEQUENCE public.projects_id_seq
 ALTER SEQUENCE public.projects_id_seq OWNER TO postgres;
 
 --
--- TOC entry 3442 (class 0 OID 0)
--- Dependencies: 219
+-- TOC entry 4864 (class 0 OID 0)
+-- Dependencies: 220
 -- Name: projects_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
@@ -120,7 +168,7 @@ ALTER SEQUENCE public.projects_id_seq OWNED BY public.projects.id;
 
 
 --
--- TOC entry 222 (class 1259 OID 16408)
+-- TOC entry 221 (class 1259 OID 16590)
 -- Name: projects_skills; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -134,7 +182,7 @@ CREATE TABLE public.projects_skills (
 ALTER TABLE public.projects_skills OWNER TO postgres;
 
 --
--- TOC entry 221 (class 1259 OID 16407)
+-- TOC entry 222 (class 1259 OID 16593)
 -- Name: projects_skills_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -149,8 +197,8 @@ CREATE SEQUENCE public.projects_skills_id_seq
 ALTER SEQUENCE public.projects_skills_id_seq OWNER TO postgres;
 
 --
--- TOC entry 3443 (class 0 OID 0)
--- Dependencies: 221
+-- TOC entry 4865 (class 0 OID 0)
+-- Dependencies: 222
 -- Name: projects_skills_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
@@ -158,21 +206,21 @@ ALTER SEQUENCE public.projects_skills_id_seq OWNED BY public.projects_skills.id;
 
 
 --
--- TOC entry 228 (class 1259 OID 16544)
+-- TOC entry 223 (class 1259 OID 16594)
 -- Name: roles; Type: TABLE; Schema: public; Owner: postgres
 --
 
 CREATE TABLE public.roles (
     id integer NOT NULL,
     name character varying(20),
-    CONSTRAINT roles_name_check CHECK (((name)::text = ANY ((ARRAY['ROLE_USER'::character varying, 'ROLE_MODERATOR'::character varying, 'ROLE_ADMIN'::character varying])::text[])))
+    CONSTRAINT roles_name_check CHECK (((name)::text = ANY (ARRAY[('ROLE_USER'::character varying)::text, ('ROLE_MODERATOR'::character varying)::text, ('ROLE_ADMIN'::character varying)::text])))
 );
 
 
 ALTER TABLE public.roles OWNER TO postgres;
 
 --
--- TOC entry 227 (class 1259 OID 16543)
+-- TOC entry 224 (class 1259 OID 16598)
 -- Name: roles_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -187,7 +235,7 @@ ALTER TABLE public.roles ALTER COLUMN id ADD GENERATED BY DEFAULT AS IDENTITY (
 
 
 --
--- TOC entry 218 (class 1259 OID 16390)
+-- TOC entry 225 (class 1259 OID 16599)
 -- Name: skills; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -201,7 +249,7 @@ CREATE TABLE public.skills (
 ALTER TABLE public.skills OWNER TO postgres;
 
 --
--- TOC entry 217 (class 1259 OID 16389)
+-- TOC entry 226 (class 1259 OID 16604)
 -- Name: skills_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -216,8 +264,8 @@ CREATE SEQUENCE public.skills_id_seq
 ALTER SEQUENCE public.skills_id_seq OWNER TO postgres;
 
 --
--- TOC entry 3444 (class 0 OID 0)
--- Dependencies: 217
+-- TOC entry 4866 (class 0 OID 0)
+-- Dependencies: 226
 -- Name: skills_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
@@ -225,7 +273,7 @@ ALTER SEQUENCE public.skills_id_seq OWNED BY public.skills.id;
 
 
 --
--- TOC entry 230 (class 1259 OID 16551)
+-- TOC entry 227 (class 1259 OID 16605)
 -- Name: users; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -240,7 +288,7 @@ CREATE TABLE public.users (
 ALTER TABLE public.users OWNER TO postgres;
 
 --
--- TOC entry 229 (class 1259 OID 16550)
+-- TOC entry 228 (class 1259 OID 16608)
 -- Name: users_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -255,7 +303,7 @@ ALTER TABLE public.users ALTER COLUMN id ADD GENERATED BY DEFAULT AS IDENTITY (
 
 
 --
--- TOC entry 231 (class 1259 OID 16556)
+-- TOC entry 229 (class 1259 OID 16609)
 -- Name: users_roles; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -268,7 +316,7 @@ CREATE TABLE public.users_roles (
 ALTER TABLE public.users_roles OWNER TO postgres;
 
 --
--- TOC entry 3247 (class 2604 OID 16428)
+-- TOC entry 4668 (class 2604 OID 16612)
 -- Name: experiences id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -276,7 +324,7 @@ ALTER TABLE ONLY public.experiences ALTER COLUMN id SET DEFAULT nextval('public.
 
 
 --
--- TOC entry 3248 (class 2604 OID 16437)
+-- TOC entry 4669 (class 2604 OID 16613)
 -- Name: links id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -284,7 +332,7 @@ ALTER TABLE ONLY public.links ALTER COLUMN id SET DEFAULT nextval('public.links_
 
 
 --
--- TOC entry 3245 (class 2604 OID 16402)
+-- TOC entry 4670 (class 2604 OID 16614)
 -- Name: projects id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -292,7 +340,7 @@ ALTER TABLE ONLY public.projects ALTER COLUMN id SET DEFAULT nextval('public.pro
 
 
 --
--- TOC entry 3246 (class 2604 OID 16411)
+-- TOC entry 4671 (class 2604 OID 16615)
 -- Name: projects_skills id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -300,7 +348,7 @@ ALTER TABLE ONLY public.projects_skills ALTER COLUMN id SET DEFAULT nextval('pub
 
 
 --
--- TOC entry 3244 (class 2604 OID 16393)
+-- TOC entry 4672 (class 2604 OID 16616)
 -- Name: skills id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -308,40 +356,50 @@ ALTER TABLE ONLY public.skills ALTER COLUMN id SET DEFAULT nextval('public.skill
 
 
 --
--- TOC entry 3426 (class 0 OID 16425)
--- Dependencies: 224
+-- TOC entry 4841 (class 0 OID 16572)
+-- Dependencies: 215
 -- Data for Name: experiences; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
+INSERT INTO public.experiences VALUES (1, 'company url', 'ABC', 'SW Engineer', 'text 1', '18d', '2025-01-06 00:00:00', '2025-01-07 00:00:00');
+INSERT INTO public.experiences VALUES (2, 'company url', 'XYZ', 'Data Engineer', 'text 2', '19d', '2025-01-06 00:00:00', '2025-01-07 00:00:00');
+INSERT INTO public.experiences VALUES (3, 'company url', 'ZDE', 'Web Engineer', 'text 3', '20d', '2025-01-06 00:00:00', '2025-01-07 00:00:00');
+INSERT INTO public.experiences VALUES (4, 'company url 1', 'test 1', 'test Engineer 1', 'test 11', '18d test1', '2025-01-05 18:05:00', '2025-01-06 19:06:00');
 
 
 --
--- TOC entry 3428 (class 0 OID 16434)
--- Dependencies: 226
+-- TOC entry 4843 (class 0 OID 16578)
+-- Dependencies: 217
 -- Data for Name: links; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
+INSERT INTO public.links VALUES (2, 'lkd_link', 'ldk_link', '1https://chatgpt.com/c/6778041e-ffb8-8012-a3e2-521b817002f5', 'icon_img1');
+INSERT INTO public.links VALUES (3, 'ins_link', 'ins_link', '2https://chatgpt.com/c/6778041e-ffb8-8012-a3e2-521b817002f5', 'icon_img2');
+INSERT INTO public.links VALUES (1, 'github_link', 'github_link', 'https://chatgpt.com/c/6778041e-ffb8-8012-a3e2-521b817002f5', 'icon_img');
 
 
 --
--- TOC entry 3422 (class 0 OID 16399)
--- Dependencies: 220
+-- TOC entry 4845 (class 0 OID 16584)
+-- Dependencies: 219
 -- Data for Name: projects; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
+INSERT INTO public.projects VALUES (1, 'Econ', 'url img', 'Econ project', 'url githut', 'url website', '2025-01-06 00:00:00', '2025-01-07 00:00:00');
+INSERT INTO public.projects VALUES (2, 'CCD', 'url img', 'CCD project', 'url githut', 'url website', '2025-01-06 00:00:00', '2025-01-07 00:00:00');
+INSERT INTO public.projects VALUES (3, 'AVC', 'url img', 'AVC project', 'url githut', 'url website', '2025-01-06 00:00:00', '2025-01-07 00:00:00');
 
 
 --
--- TOC entry 3424 (class 0 OID 16408)
--- Dependencies: 222
+-- TOC entry 4847 (class 0 OID 16590)
+-- Dependencies: 221
 -- Data for Name: projects_skills; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
 
 
 --
--- TOC entry 3430 (class 0 OID 16544)
--- Dependencies: 228
+-- TOC entry 4849 (class 0 OID 16594)
+-- Dependencies: 223
 -- Data for Name: roles; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
@@ -351,8 +409,8 @@ INSERT INTO public.roles VALUES (3, 'ROLE_ADMIN');
 
 
 --
--- TOC entry 3420 (class 0 OID 16390)
--- Dependencies: 218
+-- TOC entry 4851 (class 0 OID 16599)
+-- Dependencies: 225
 -- Data for Name: skills; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
@@ -362,8 +420,8 @@ INSERT INTO public.skills VALUES (3, NULL, 'JavaScript');
 
 
 --
--- TOC entry 3432 (class 0 OID 16551)
--- Dependencies: 230
+-- TOC entry 4853 (class 0 OID 16605)
+-- Dependencies: 227
 -- Data for Name: users; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
@@ -375,8 +433,8 @@ INSERT INTO public.users VALUES (11, 'usertest03@gmail.com', '$2a$10$Xn4PERnaw0v
 
 
 --
--- TOC entry 3433 (class 0 OID 16556)
--- Dependencies: 231
+-- TOC entry 4855 (class 0 OID 16609)
+-- Dependencies: 229
 -- Data for Name: users_roles; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
@@ -389,35 +447,35 @@ INSERT INTO public.users_roles VALUES (11, 2);
 
 
 --
--- TOC entry 3445 (class 0 OID 0)
--- Dependencies: 223
+-- TOC entry 4867 (class 0 OID 0)
+-- Dependencies: 216
 -- Name: experiences_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.experiences_id_seq', 1, false);
+SELECT pg_catalog.setval('public.experiences_id_seq', 4, true);
 
 
 --
--- TOC entry 3446 (class 0 OID 0)
--- Dependencies: 225
+-- TOC entry 4868 (class 0 OID 0)
+-- Dependencies: 218
 -- Name: links_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.links_id_seq', 1, false);
+SELECT pg_catalog.setval('public.links_id_seq', 4, true);
 
 
 --
--- TOC entry 3447 (class 0 OID 0)
--- Dependencies: 219
+-- TOC entry 4869 (class 0 OID 0)
+-- Dependencies: 220
 -- Name: projects_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.projects_id_seq', 1, false);
+SELECT pg_catalog.setval('public.projects_id_seq', 4, true);
 
 
 --
--- TOC entry 3448 (class 0 OID 0)
--- Dependencies: 221
+-- TOC entry 4870 (class 0 OID 0)
+-- Dependencies: 222
 -- Name: projects_skills_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
@@ -425,8 +483,8 @@ SELECT pg_catalog.setval('public.projects_skills_id_seq', 1, false);
 
 
 --
--- TOC entry 3449 (class 0 OID 0)
--- Dependencies: 227
+-- TOC entry 4871 (class 0 OID 0)
+-- Dependencies: 224
 -- Name: roles_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
@@ -434,17 +492,17 @@ SELECT pg_catalog.setval('public.roles_id_seq', 3, true);
 
 
 --
--- TOC entry 3450 (class 0 OID 0)
--- Dependencies: 217
+-- TOC entry 4872 (class 0 OID 0)
+-- Dependencies: 226
 -- Name: skills_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.skills_id_seq', 3, true);
+SELECT pg_catalog.setval('public.skills_id_seq', 5, true);
 
 
 --
--- TOC entry 3451 (class 0 OID 0)
--- Dependencies: 229
+-- TOC entry 4873 (class 0 OID 0)
+-- Dependencies: 228
 -- Name: users_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
@@ -452,7 +510,7 @@ SELECT pg_catalog.setval('public.users_id_seq', 11, true);
 
 
 --
--- TOC entry 3257 (class 2606 OID 16432)
+-- TOC entry 4675 (class 2606 OID 16618)
 -- Name: experiences experiences_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -461,7 +519,7 @@ ALTER TABLE ONLY public.experiences
 
 
 --
--- TOC entry 3259 (class 2606 OID 16441)
+-- TOC entry 4677 (class 2606 OID 16620)
 -- Name: links links_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -470,7 +528,7 @@ ALTER TABLE ONLY public.links
 
 
 --
--- TOC entry 3253 (class 2606 OID 16406)
+-- TOC entry 4679 (class 2606 OID 16622)
 -- Name: projects projects_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -479,7 +537,7 @@ ALTER TABLE ONLY public.projects
 
 
 --
--- TOC entry 3255 (class 2606 OID 16413)
+-- TOC entry 4681 (class 2606 OID 16624)
 -- Name: projects_skills projects_skills_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -488,7 +546,7 @@ ALTER TABLE ONLY public.projects_skills
 
 
 --
--- TOC entry 3261 (class 2606 OID 16549)
+-- TOC entry 4683 (class 2606 OID 16626)
 -- Name: roles roles_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -497,7 +555,7 @@ ALTER TABLE ONLY public.roles
 
 
 --
--- TOC entry 3251 (class 2606 OID 16397)
+-- TOC entry 4685 (class 2606 OID 16628)
 -- Name: skills skills_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -506,7 +564,7 @@ ALTER TABLE ONLY public.skills
 
 
 --
--- TOC entry 3263 (class 2606 OID 16564)
+-- TOC entry 4687 (class 2606 OID 16630)
 -- Name: users uk6dotkott2kjsp8vw4d0m25fb7; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -515,7 +573,7 @@ ALTER TABLE ONLY public.users
 
 
 --
--- TOC entry 3265 (class 2606 OID 16562)
+-- TOC entry 4689 (class 2606 OID 16632)
 -- Name: users ukk8d0f2n7n88w1a16yhua64onx; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -524,7 +582,7 @@ ALTER TABLE ONLY public.users
 
 
 --
--- TOC entry 3267 (class 2606 OID 16555)
+-- TOC entry 4691 (class 2606 OID 16634)
 -- Name: users users_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -533,7 +591,7 @@ ALTER TABLE ONLY public.users
 
 
 --
--- TOC entry 3269 (class 2606 OID 16560)
+-- TOC entry 4693 (class 2606 OID 16636)
 -- Name: users_roles users_roles_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -542,7 +600,7 @@ ALTER TABLE ONLY public.users_roles
 
 
 --
--- TOC entry 3272 (class 2606 OID 16570)
+-- TOC entry 4696 (class 2606 OID 16637)
 -- Name: users_roles fk2o0jvgh89lemvvo17cbqvdxaa; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -551,7 +609,7 @@ ALTER TABLE ONLY public.users_roles
 
 
 --
--- TOC entry 3273 (class 2606 OID 16565)
+-- TOC entry 4697 (class 2606 OID 16642)
 -- Name: users_roles fkj6m8fwv7oqv74fcehir1a9ffy; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -560,7 +618,7 @@ ALTER TABLE ONLY public.users_roles
 
 
 --
--- TOC entry 3270 (class 2606 OID 16419)
+-- TOC entry 4694 (class 2606 OID 16647)
 -- Name: projects_skills projects_skills_project_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -569,7 +627,7 @@ ALTER TABLE ONLY public.projects_skills
 
 
 --
--- TOC entry 3271 (class 2606 OID 16414)
+-- TOC entry 4695 (class 2606 OID 16652)
 -- Name: projects_skills projects_skills_skill_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -577,7 +635,7 @@ ALTER TABLE ONLY public.projects_skills
     ADD CONSTRAINT projects_skills_skill_id_fkey FOREIGN KEY (skill_id) REFERENCES public.skills(id);
 
 
--- Completed on 2025-01-06 01:05:58
+-- Completed on 2025-01-07 15:40:53
 
 --
 -- PostgreSQL database dump complete
