@@ -1,3 +1,5 @@
+
+
 create table skills (
 	id bigserial primary key,
 	icon varchar(255),
@@ -42,3 +44,23 @@ create table links(
 	url varchar(255),
 	icon varchar(255)
 );
+
+create table blogs(
+	id bigserial primary key,
+	title varchar(255),
+	img_url varchar(255),
+	content text,
+	description varchar(255),
+	status varchar(255),
+	create_date timestamp,
+	update_date timestamp
+);
+
+create table blogs_skills(
+	id bigserial primary key,
+	blog_id bigint,
+	skill_id bigint,
+
+	foreign key (blog_id) references blogs(id),
+	foreign key (skill_id) references skills(id)
+)
